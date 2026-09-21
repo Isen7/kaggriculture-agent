@@ -352,6 +352,25 @@ env.run([my_agent, "random"])
 env.render(mode="ipython", width=800, height=800)
 ```
 
+## Local Development
+
+Create a virtual environment and install the pinned official simulator:
+
+```powershell
+py -3 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Run the minimal `main.py` agent against both built-in baselines and generate replay JSON files:
+
+```powershell
+.\.venv\Scripts\python.exe benchmark.py
+```
+
+The benchmark uses a fixed seed, checks that both agents finish with `DONE` status,
+loads each replay back as JSON, and verifies that it contains the configured number
+of episode steps. Generated artifacts are written under `replays/` and are ignored by Git.
+
 ## Configuration Defaults
 
 Per-crop seed costs and per-product base prices are not configurable; they are documented in the Object Types and Price Function tables above. The configurable knobs are:
@@ -369,4 +388,3 @@ Per-crop seed costs and per-product base prices are not configurable; they are d
 | townShopSellInterval | 4 | Turns between consumption ticks by every unlocked town shop instance |
 | townCenterSellInterval | 24 | Turns between consumption ticks by the town center (flat rate, once per day) |
 | seed | null | Optional input seed for deterministic episode generation; cleared from config after read so it stays out of agent observations |
-
